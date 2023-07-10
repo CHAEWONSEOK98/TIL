@@ -70,3 +70,31 @@ $span.addEventListener('click', () => {
   console.log('클릭');
 }, true);
 ```
+
+<hr />
+
+**이벤트 위임 - Event Delegation**
+
+- 반복되는 이벤트를 처리할 때
+- 부모 안에 있는 자식들에게 공통적으로 무언가를 처리해야 할 때
+
+```
+<html>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+  </ul>
+</html>
+
+
+const ul = document.querySelector('ul');
+ul.addEventListener('click', (event) => {
+  if (event.target.tagName == 'LI') {
+    event.target.classList.add();
+  }
+});
+```

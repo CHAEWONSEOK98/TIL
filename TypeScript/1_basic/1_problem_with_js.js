@@ -43,3 +43,4 @@ function addTypeSafe(num1, num2) {
 
 console.log(addTypeSafe(1, 2));
 console.log(addTypeSafe(1, '2'));
+console.log(addTypeSafe(1, '2'));

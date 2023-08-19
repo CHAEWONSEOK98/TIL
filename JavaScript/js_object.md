@@ -144,3 +144,125 @@ configurable: false,
 
 console.log(Object.getOwnPropertyDescriptor(person3, 'height'));
 ```
+
+## Immutable Objects - extensible, seal, freeze (불변 객체)
+
+### extensible
+
+- Object.isExtensible(person) : object의 기본 extensible 값은 true
+- Extensible : 확장이 가능한지에 대한 여부를 설정하는 것
+- extensible 값이 false인 경우 값의 추가는 허용 X, 값의 삭제 허용 O
+
+```
+const person = {
+  name: '채귤',
+  year: 1998,
+
+  get age() {
+    return new Date().getFullYear() - this.year;
+  },
+
+  set age(age) {
+    this.year = new Date().getFullYear - age;
+  },
+};
+
+
+    person['country'] = 'korea';
+    console.log(person); > { name: '채귤', year: 1998, age: [Getter/Setter], country: 'korea' }
+
+    Object.preventExtensions(person);
+    Object.isExtensible(person) : false
+
+    person['hobby'] = 'read novel';
+    console.log(person); > { name: '채귤', year: 1998, age: [Getter/Setter], country: 'korea' }
+
+    delete person['country'];
+    console.log(person); > { name: '채귤', year: 1998, age: [Getter/Setter] }
+```
+
+<hr />
+
+### seal
+
+- seal된 객체는 값의 추가도 삭제도 허용되지않음
+
+```
+const person2 = {
+  name: '채귤',
+  year: 1998,
+
+  get age() {
+    return new Date().getFullYear() - this.year;
+  },
+
+  set age(age) {
+    this.year = new Date().getFullYear - age;
+  },
+};
+
+Object.isSealed(person2) // false
+
+Object.seal(person2);
+Object.isSealed(person2) // true
+
+person2['country'] = '대한민국';
+console.log(person2); // { name: '채귤', year: 1998, age: [Getter/Setter] }
+
+delete person2['name'];
+console.log(person2); // { name: '채귤', year: 1998, age: [Getter/Setter] }
+```
+
+<hr />
+
+### freeze
+
+- Freezed - 읽기 외에 모든 기능 불가능하도록 함 > 추가, 삭제, 변경 x
+
+```
+const person3 = {
+  name: '채귤',
+  year: 1998,
+
+  get age() {
+    return new Date().getFullYear() - this.year;
+  },
+
+  set age(age) {
+    this.year = new Date().getFullYear - age;
+  },
+};
+
+Object.isFrozen(person3) // false
+
+Object.freeze(person3);
+console.log(Object.isFrozen(person3)); // true
+
+person3['country'] = '대한민국';
+console.log(person3); // { name: '채귤', year: 1998, age: [Getter/Setter] }
+
+delete person3['name'];
+console.log(person3); // { name: '채귤', year: 1998, age: [Getter/Setter] }
+```
+
+<hr />
+
+### 내장? 중첩?된 하위객체의 메서드 적용여부
+
+`상위 오브젝트를 프리즈해도 중첩된 하위 오브젝트까지 프리즈되는 것은 아니다.`
+
+```
+const dog = {
+  name: '킹독',
+  year: 3,
+  cat: {
+    name: '킹캣',
+    year: 5,
+  },
+};
+
+Object.freeze(dog);
+
+console.log(Object.isFrozen(dog)); // true
+console.log(Object.isFrozen(dog['cat'])); // false
+```

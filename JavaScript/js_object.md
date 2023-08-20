@@ -1,6 +1,6 @@
 # JavaScript Object
 
-## 객체를 선언할 때 사용할 수 있는 방법
+## #객체를 선언할 때 사용할 수 있는 방법
 
 - 객체 리터럴 방식 사용 - { }
 
@@ -35,7 +35,7 @@ function PersonFunction(name, year) {
 const kingGyul = new PersonFunction('킹귤', 1998);
 ```
 
-## Property Attribute (프로퍼티 어트리뷰트)
+## #Property Attribute (프로퍼티 어트리뷰트)
 
 - **Property** : 객체를 선언했을 때 안에 들어가는 값, 객체 안에 들어있는 값
 - **Attribute** : 프로퍼티속성에 추가로 생성된 것, 자동으로 생성되는 속성들
@@ -145,7 +145,7 @@ configurable: false,
 console.log(Object.getOwnPropertyDescriptor(person3, 'height'));
 ```
 
-## Immutable Objects - extensible, seal, freeze (불변 객체)
+## #Immutable Objects - extensible, seal, freeze (불변 객체)
 
 ### extensible
 
@@ -265,4 +265,51 @@ Object.freeze(dog);
 
 console.log(Object.isFrozen(dog)); // true
 console.log(Object.isFrozen(dog['cat'])); // false
+```
+
+## #생성자함수
+
+- 일반함수에서 생성자함수를 생성할 땐, new 키워드를 사용해야한다.
+- new 키워드를 사용하지 않는 경우 생성자함수를 생성할 수 없다.
+
+```
+function PersonModel(name, year) {
+  this.name = name;
+  this.year = year;
+}
+
+const chaeGyul = new PersonModel('채귤', 1998); // PersonModel { name: '채귤', year: 1998 }
+const chaeGyul2 = PersonModel('채귤', 1998); // undefined
+```
+
+<hr />
+
+`new 키워드를 사용하지 않은 경우에도, 생성자 함수로 실행시키는 예외상황`
+
+```
+
+function PersonModel(name, year) {
+  if (!new.target) {
+    return new PersonModel(name, year);
+  }
+  this.name = name;
+  this.year = year;
+}
+
+const chaeGyul3 = PersonModel('채귤', 1998); // PersonModel { name: '채귤', year: 1998 }
+```
+
+<hr />
+
+`Arrow function`
+
+```
+[Error Code] : PersonModelArrow is not a constructor > new 키워드는 일반함수에서만 사용가능
+
+const PersonModelArrow = (name, year) => {
+  this.name = name;
+  this.year = year;
+};
+
+const personModelArrow = new PersonModelArrow('채귤', 1998);
 ```

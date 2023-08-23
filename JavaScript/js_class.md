@@ -138,3 +138,54 @@ console.log(person2); // PersonModel { name: '채귤2', age: 26 }
 const person3 = PersonModel2.fromList(['귤채2', 26]);
 console.log(person3); // PersonModel { name: '귤채2', age: 26 }
 ```
+
+<hr />
+
+## #Inheritance
+
+> 상속(inheritance) : 은 객체들 간의 관계를 구축하는 방법이다.  
+> 수퍼클래스, 또는 부모클래스 등의 기존의 클래스로부터 속성과 동작을 상속받을 수 있다.  
+> 상속하는 경우 부모클래스의 모든 프로퍼티를 자식클래스가 받을 수 있지만, 반대의 경우는 성립하지 않는다.
+
+```
+class ParentModel {
+  name;
+  age;
+
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+class DaughterModel extends ParentModel {
+  dance() {
+    return `딸 - 춤`;
+  }
+}
+
+class SonModel extends ParentModel {
+  workout() {
+    return `아들 - 운동`;
+  }
+}
+
+const daughter = new DaughterModel('채별', 3);
+console.log(daughter); // DaughterModel { name: '채별', age: 3 }
+console.log(daughter.dance()); // 딸 - 춤
+console.log(daughter.name); // 채별
+console.log(daughter.workout()); // error
+
+const son = new SonModel('채정', 7);
+console.log(son); // SonModel { name: '채정', age: 7 }
+console.log(son.workout()); // 아들 - 운동
+console.log(son.age); // 7
+
+const mother = new ParentModel('채윤', 55);
+console.log(mother); // ParentModel { name: '채윤', age: 55 }
+console.log(mother.workout()); // error
+
+console.log(daughter instanceof ParentModel); // true
+console.log(daughter instanceof DaughterModel); // true
+console.log(daughter instanceof SonModel); // false
+```

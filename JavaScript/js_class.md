@@ -189,3 +189,53 @@ console.log(daughter instanceof ParentModel); // true
 console.log(daughter instanceof DaughterModel); // true
 console.log(daughter instanceof SonModel); // false
 ```
+
+<hr />
+
+## #Super
+
+> 자식 클래스 내에서 부모클래스의 생성자 역할  
+> 자식 클래스에서 부모 클래스의 메소드 접근 역할
+
+- property - 변수값을 불러올 땐 super 키워드를 함수 안에서 사용 X > this 키워드 사용할 것
+- 함수 안에서 함수를 실행시키는 경우 super 키워드를 사용할 수 있다.
+
+```
+class PersonModel {
+  name;
+  age;
+
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  introduce() {
+    return `${this.name}-${this.age}`;
+  }
+}
+
+class ManModel extends PersonModel {
+  military;
+
+  constructor(name, age, military) {
+    super(name, age);
+    this.military = military;
+  }
+
+  introduce() {
+    // return `${super.name}-${super.age}-${this.military}`; > undefined-undefined-O
+
+    //return `${this.name}-${this.age}-${this.military}`;
+    return `${super.introduce()}-${this.military}`; // 위 코드와 결과는 같다.
+  }
+}
+
+const man = new ManModel('채귤', 26, 'O');
+console.log(man); // ManModel { name: '채귤', age: 26, military: 'O' }
+console.log(man.introduce()); // 채귤-26-O
+
+const person = new PersonModel('사람', 26);
+console.log(person); // PersonModel { name: '사람', age: 26 }
+console.log(person.introduce()); // 사람-26
+```

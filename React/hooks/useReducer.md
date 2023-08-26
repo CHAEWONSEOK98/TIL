@@ -28,3 +28,44 @@
 - 새로 렌더링
 
 `react의 철학 ... props를 통해 위에서 아래로만 전달 > redux와 궁합이 잘 맞음`
+
+<hr />
+
+## #Code
+
+`counter - reducer`
+
+```
+import { useReducer } from 'react';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'INCREASE':
+      return state + 1;
+    case 'DECREASE':
+      return state - 1;
+  }
+};
+
+const UseReducer = () => {
+  const [state, dispatch] = useReducer(reducer, 0);
+
+  const handleButtonIncrease = () => {
+    dispatch({ type: 'INCREASE' });
+  };
+
+  const handleButtonDecrease = () => {
+    dispatch({ type: 'DECREASE' });
+  };
+
+  return (
+    <div>
+      {state}
+      <button onClick={handleButtonIncrease}>+</button>
+      <button onClick={handleButtonDecrease}>-</button>
+    </div>
+  );
+};
+
+export default UseReducer;
+```

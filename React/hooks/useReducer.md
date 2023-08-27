@@ -69,3 +69,74 @@ const UseReducer = () => {
 
 export default UseReducer;
 ```
+
+<hr />
+
+`todolist - reducer`
+
+```
+import { useReducer, useState } from 'react';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'CREATE': {
+      return [
+        ...state,
+        {
+          id: action.todo.id,
+          todo: action.todo.text,
+        },
+      ];
+    }
+    case 'DELETE': {
+      return state.filter((todo) => todo.id !== action.id);
+    }
+  }
+};
+
+const UseReducer = () => {
+  const [state, dispatch] = useReducer(reducer, []);
+  const [text, setText] = useState('');
+
+  const handleChange = (event) => {
+    setText(event.target.value);
+  };
+
+  const handleCreate = () => {
+    const todo = {
+      id: Math.random(),
+      text,
+    };
+    dispatch({ type: 'CREATE', todo });
+    setText('');
+  };
+
+  const handleDelete = (id) => {
+    dispatch({ type: 'DELETE', id });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input type="text" value={text} onChange={handleChange} />
+        <button onClick={handleCreate}>생성</button>
+      </form>
+
+      <div>
+        {state.map((todo) => (
+          <li key={todo.id}>
+            <span>{todo.todo}</span>
+            <button onClick={() => handleDelete(todo.id)}>X</button>
+          </li>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default UseReducer;
+```

@@ -25,12 +25,22 @@
   - reset : 원하는 시점으로 돌아간 뒤 이후 내역들을 지운다.
   - revert : 되돌리기 원하는 시점의 커밋을 거꾸로 실행한다.
 
-[reset]
+**reset**
 
 - git reset --hard (돌아갈 커밋 해시가 없는 경우 마지막 커밋을 가리킴)
 - git reset --hard (돌아갈 커밋 해시)
+-
+- reset의 세 가지 옵션
 
-[revert]
+  - --soft: repository에서 staging area로 이동
+  - --mixed (default): repository에서 working directory로 이동
+  - --hard: 수정사항 완전히 삭제
+
+-
+- HEAD 사용하여 reset
+  - `git reset HEAD(원하는 단계) (옵션)`
+
+**revert**
 
 - git revert (되돌릴 커밋 해시)
 - 커밋하지않고 revert : git revert --no-commit (되돌릴 커밋 해시)
@@ -78,3 +88,53 @@
   -
   - 충돌 해결이 어려울 경우 rebase중단 : `git rebase --abort`
   - 해결 가능 시 충돌 부분을 수정한 뒤 git add ., `git rebase --continue`
+
+<hr />
+
+## #GitHub
+
+- clone : `git clone (원격 저장소 주소)`
+- 원격으로 커밋 밀어올리기 : `git push`
+- 원격의 커밋 당겨오기 : `git pull`
+
+<hr />
+
+## #Git의 3가지 공간 : Working directory, Staging area, Repository
+
+**Working directory**
+
+- untracked: Add된 적 없는 파일, ignore 된 파일
+- tracked: Add된 적 있고 변경내역이 있는 파일
+- git add 명령어로 Staging area로 이동
+
+**Staging area**
+
+- 커밋을 위한 준비 단계
+  - 예시: 작업을 위해 선택된 파일들
+- git commit 명령어로 repository로 이동
+
+**Repository**
+
+- .git directory라고도 불림
+- 커밋된 상태
+
+<hr />
+
+## #HEAD : 현재 속한 브랜치의 가장 최신 커밋
+
+`checkout으로 앞뒤 이동 - git checkout HEAD^`
+
+- ^ 또는 ~: 갯수만큼 이전으로 이동
+  - git checkout HEAD^^^, git checkout HEAD~5
+-
+- 커밋 해시를 사용해서도 이동 가능
+  - git checkout (커밋해시)
+-
+- git checkout - : (이동을) 한 단계 되돌리기
+
+<hr />
+
+## #fetch | pull
+
+> fetch: 원격 저장소의 최신 커밋을 로컬로 가져오기만 함  
+> pull: 원격 저장소의 최신 커밋을 로컬로 가져와 merge 또는 rebase

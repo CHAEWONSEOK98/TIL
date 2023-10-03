@@ -39,3 +39,37 @@ console.log(name); // Still "Taylor"!
 - 컴포넌트에 다른 key를 전달하여 컴포넌트의 state를 재설정할 수 있다.
 
 - key가 변경되면 React는 컴포넌트 및 그 모든 자식을 처음부터 다시 생성하므로 state가 초기화된다.
+
+<hr />
+
+```
+const [userInput, setUserInput] = useState({
+  enteredTitle: '',
+  enteredAmount: '',
+  enteredDate: '',
+});
+
+[X]
+const handleChange = (e) => {
+  setUserInput({
+    ...userInput,
+    enteredTitle: event.target.value,
+  });
+};
+
+[O]
+const handleChange = (e) => {
+	setUserInput((prevState) => {
+		return {...prevState, enteredTitle: e.target.value};
+	});
+};
+```
+
+**리액트는 상태를 즉시 처리하지 않고, 업데이트를 예약한다.**
+
+- [x] 코드로 진행한 경우
+
+  - 다수의 상태 업데이트를 동시에 예약할 경우 오래되었거나 잘못된 상태 스냅샷에 의존하게 될 수 있다.
+
+- [O]코드로 진행한 경우
+  - 내부 함수에서 제공하는 상태 스냅샷이 예약된 모든 상태 업데이트를 기억하고 항상 최신 상태 스냅샷이 되도록 보장한다.
